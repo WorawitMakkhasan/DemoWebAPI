@@ -1,5 +1,6 @@
 global using Microsoft.EntityFrameworkCore;
 global using WebApiDemo.Datasource;
+using WebApiDemo.Core.IConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("default"));
 });
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 

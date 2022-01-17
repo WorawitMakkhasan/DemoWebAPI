@@ -21,5 +21,56 @@ namespace WebApiDemo.Core.Repository
             }
         }
 
+        public override async Task<bool> Upsert(Student entity)
+        {
+            try
+            {
+                var student = await dbSet.Where(s => s.Id == entity.Id)
+                                     .FirstOrDefaultAsync();
+
+                if (student == null)
+                {
+                    return await Add(entity);
+                }
+                student.Id = entity.Id;
+                student.Name = entity.Name;
+                student.Age = entity.Age;
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "{Repo} Upsert Method error", typeof(StudentRepository));
+                return false;
+            }
+        }
+
+        public override async Task<bool> Delete(int id)
+        {
+            try
+            {
+                var exist = await dbSet.Where(s => s.Id == id)
+                                       .FirstOrDefaultAsync();
+
+                if (exist != null)
+                {
+                    dbSet.Remove(exist);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "{Repo} Upsert Method error", typeof(StudentRepository));
+                return false;
+            }
+
+        }
+
+
+
     }
 }

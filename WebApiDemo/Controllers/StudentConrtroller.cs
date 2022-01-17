@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApiDemo.Core.IConfiguration;
 using WebApiDemo.Model;
 using WebApiDemo.Model.Dto;
 
@@ -6,12 +7,24 @@ namespace WebApiDemo.Controllers
 {
     [Route("api/Student")]
     [ApiController]
+
+
     public class StudentConrtroller : ControllerBase
     {
+        private readonly ILogger<StudentConrtroller> _logger;
+
+        private readonly IUnitOfWork _unitOfWork;
 
         private readonly DataContext _context;
-        public StudentConrtroller(DataContext context)
+        //public StudentConrtroller(DataContext context)
+        //{
+        //    _context = context;
+        //}
+
+        public StudentConrtroller(IUnitOfWork unitOfWork, ILogger<StudentConrtroller> logger, DataContext context)
         {
+            _unitOfWork = unitOfWork;
+            _logger = logger;
             _context = context;
         }
 

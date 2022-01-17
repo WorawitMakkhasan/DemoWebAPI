@@ -33,7 +33,7 @@ namespace WebApiDemo.Migrations
 
                     b.HasIndex("studentId");
 
-                    b.ToTable("CourseStudent");
+                    b.ToTable("CourseStudent", (string)null);
                 });
 
             modelBuilder.Entity("WebApiDemo.Model.Course", b =>
@@ -53,7 +53,7 @@ namespace WebApiDemo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("WebApiDemo.Model.Inventory", b =>
@@ -75,7 +75,7 @@ namespace WebApiDemo.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Inventories");
+                    b.ToTable("Inventories", (string)null);
                 });
 
             modelBuilder.Entity("WebApiDemo.Model.Location", b =>
@@ -101,7 +101,7 @@ namespace WebApiDemo.Migrations
                     b.HasIndex("StudentId")
                         .IsUnique();
 
-                    b.ToTable("Locations");
+                    b.ToTable("Locations", (string)null);
                 });
 
             modelBuilder.Entity("WebApiDemo.Model.Student", b =>
@@ -121,7 +121,7 @@ namespace WebApiDemo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("CourseStudent", b =>
