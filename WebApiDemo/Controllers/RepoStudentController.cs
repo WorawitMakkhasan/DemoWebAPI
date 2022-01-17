@@ -39,12 +39,20 @@ namespace WebApiDemo.Controllers
         {
             var student = await _unitOfWork.Student.GetById(id);
 
+
             if (student == null)
             {
                 return BadRequest("Student Not Found");
             }
             return Ok(student);
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> All()
+        {
+            var student = await _unitOfWork.Student.All();
+            return Ok(student);
         }
     }
 }

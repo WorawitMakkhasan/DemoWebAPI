@@ -16,10 +16,6 @@ namespace WebApiDemo.Controllers
         private readonly IUnitOfWork _unitOfWork;
 
         private readonly DataContext _context;
-        //public StudentConrtroller(DataContext context)
-        //{
-        //    _context = context;
-        //}
 
         public StudentConrtroller(IUnitOfWork unitOfWork, ILogger<StudentConrtroller> logger, DataContext context)
         {
