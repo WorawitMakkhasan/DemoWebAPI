@@ -24,6 +24,21 @@ namespace WebApiDemo.Controllers
             _context = context;
         }
 
+        [HttpGet("/Join")]
+        public async Task<ActionResult> GetJoin()
+        {
+            var leftjoin = _context.Students.GroupJoin(
+                           _context.Inventories,
+                                  i => i.Id,
+                                  p => p.StudentId,
+                                  (i, g) => new { i = i, g = g })
+
+                           .SelectMany(temp => temp.g.DefaultIfEmpty(),
+                                      (temp, p) => new { i = temp.i, p = p });
+
+            return Ok(leftjoin);
+        }
+
         [HttpGet]
         public async Task<ActionResult> Get()
         {
@@ -32,7 +47,6 @@ namespace WebApiDemo.Controllers
                 .Include(s => s.Invertory)
                 .Include(s => s.Courses)
                 .ToListAsync());
-
         }
 
         [HttpGet("{id}")]

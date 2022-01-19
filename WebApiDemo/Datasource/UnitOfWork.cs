@@ -14,7 +14,6 @@ namespace WebApiDemo.Datasource
         {
             _context = context;
             _logger = logger.CreateLogger("logs");
-
             Student = new StudentRepository(_context, _logger);
         }
 
