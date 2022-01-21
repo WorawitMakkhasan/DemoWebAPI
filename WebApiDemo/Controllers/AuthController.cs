@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -59,6 +61,14 @@ namespace WebApiDemo.Controllers
             return Ok(token);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("TokenValidation")]
+        public async Task<ActionResult> TokenValidation(AuthDto request)
+        {
+            var studentById = await _unitOfWork.Student.GetById(request.Id);
+            return Ok(studentById);
+        }
+
 
         private string CreatedToken(Student student)
         {
@@ -73,6 +83,8 @@ namespace WebApiDemo.Controllers
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var token = new JwtSecurityToken(
+                issuer: _configuraton.GetSection("AppSetting:Issuer").Value,
+                audience: _configuraton.GetSection("AppSetting:Audience").Value,
                 claims: claims,
                 expires: DateTime.Now.AddDays(1),
                 signingCredentials: cred);
